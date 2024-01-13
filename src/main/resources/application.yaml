@@ -1,0 +1,27 @@
+file:
+  path: src/main/resources/clients.txt
+
+spring:
+  datasource:
+    url: jdbc:h2:file:C:/Users/astonuser/Desktop/simple_microservice-master/microcervice-curency/EmailSendler/data/email_sender_db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+  mail:
+    host: smtp.mail.ru
+    port: 587
+    username: firstkam@mail.ru
+    password: "KHvcJkWUqvT3vzSEguhu"
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
