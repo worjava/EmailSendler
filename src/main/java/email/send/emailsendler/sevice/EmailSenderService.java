@@ -1,8 +1,13 @@
 package email.send.emailsendler.sevice;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 public interface EmailSenderService {
-    void sendEmail(String subject, String htmlContent);// single send message
+    Mono<Void> sendEmail(String subject, String email);// single send message
 
 
-    void sendMassEmail(String subject, String htmlContent);// mass send messages
+    Flux<Void> sendMassEmail(String subject);// mass send messages
+
+
 }
