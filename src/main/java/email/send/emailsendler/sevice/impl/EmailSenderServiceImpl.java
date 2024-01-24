@@ -44,8 +44,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private String mail;
 
 
-    @Override
     @SneakyThrows
+    @Override
     public Mono<Void> sendEmail(String subject, String email) {
         return Mono.fromRunnable(() -> {
             try {
@@ -58,9 +58,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
                 javaMailSender.send(message);
                 writeSuccessfulEmailToFile(email);
-                logger.info("Email sent  OK");
+                logger.info("Email sent OK");
             } catch (MailSendException e) {
-                logger.error("An error not sending email");
+                logger.error("An error occurred while sending email");
                 deleteClientIfNoValid(email);
             } catch (MessagingException e) {
                 deleteClientIfNoValid(email);
@@ -73,11 +73,11 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 deleteClientIfNoValid(email);
                 // Обработка IOException
                 logger.error("Error in writing to file: " + e.getMessage(), e);
+            } catch (Exception с) {
+                throw new RuntimeException("EXIT ");
             }
-        }).onErrorResume(e -> Mono.empty()).then(); // Игнорирование ошибок для Mono<Void>
+        });
     }
-
-
 
     @SneakyThrows
     @Override
@@ -85,10 +85,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         return Flux.fromIterable(clientRepository.findByIsEmailSentFalse())
                 .flatMap(client -> {
                     client.setEmailSent(true);
-                    return sendEmail(subject, client.getEmail()).
-                            then(Mono.fromRunnable(() -> clientRepository.save(client)));
-
-
+                    return sendEmail(subject, client.getEmail())
+                            .then(Mono.fromRunnable(() -> clientRepository.save(client)))
+                            .onErrorResume(error -> {
+                                deleteClientIfNoValid(client.getEmail());
+                                return Mono.empty();
+                            })
+                            .then();  // Приведение к Flux<Void>
                 });
     }
 

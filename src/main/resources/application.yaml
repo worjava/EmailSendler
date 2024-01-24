@@ -26,7 +26,7 @@ spring:
     port: 587
     username: firstkam@mail.ru
 
-    password: "SMLURV61HwvwbiU8hMjV"
+    password: "yd9jrGkUWidvDWSvHpQW"
     test-connection: true
     properties:
       mail:
