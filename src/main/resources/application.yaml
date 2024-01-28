@@ -23,6 +23,7 @@ spring:
   # Настройки почты
   mail:
     host: smtp.mail.ru
+
     port: 587
     username: firstkam@mail.ru
 
@@ -41,9 +42,9 @@ spring:
 
 
   #        username: firstkam@mail.ru
-#        password: "SMLURV61HwvwbiU8hMjV"
+#        password: "yd9jrGkUWidvDWSvHpQW"
 #  nedvijimostprosto@gmail.com
-#  leihgsymllsdnkie
+#  xboxmagjddrdciun
 
   boot:
     admin:

@@ -74,6 +74,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 // Обработка IOException
                 logger.error("Error in writing to file: " + e.getMessage(), e);
             } catch (Exception с) {
+                System.exit(400);
                 throw new RuntimeException("EXIT ");
             }
         });
