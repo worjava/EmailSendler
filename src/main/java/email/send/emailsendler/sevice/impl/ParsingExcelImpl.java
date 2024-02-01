@@ -51,7 +51,7 @@ public class ParsingExcelImpl implements ParsingExcelService {
     }
 
     public static void main(String[] args) {
-        String excelFilePath = "src/main/resources/Аудитория интересующаяся тематикой сада и огорода.xlsx";
+        String excelFilePath = "src/main/resources/Бизнес-2.xlsx";
         String outputFilePath = "src/main/resources/emails.txt";
         int columnIndex = 0; // Замените на индекс вашего столбца
 

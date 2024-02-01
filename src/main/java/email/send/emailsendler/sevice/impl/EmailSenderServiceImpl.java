@@ -107,13 +107,37 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         });
     }
 
+    private static final String EMAILS_FILE_PATH = "logs/emails.txt";
+
     private void writeSuccessfulEmailToFile(String email) {
+        if (!isEmailAlreadyWritten(email)) {
+            try {
+                Files.write(Paths.get(EMAILS_FILE_PATH), (email + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                // Обработка ошибки записи в файл
+                logger.error("Error writing successful email to file", e);
+                // или бросить RuntimeException, чтобы прервать выполнение
+                throw new RuntimeException("Error writing successful email to file", e);
+            }
+        } else {
+            // Логика, если email уже записан
+            System.out.println("Email already exists in the file: " + email);
+        }
+    }
+
+    private boolean isEmailAlreadyWritten(String email) {
         try {
-            Files.write(Paths.get("logs/emails.txt"), (email + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+            // Считываем все строки из файла
+            byte[] fileContent = Files.readAllBytes(Paths.get(EMAILS_FILE_PATH));
+            String content = new String(fileContent);
+
+            // Проверяем, содержится ли email в файле
+            return content.contains(email);
         } catch (IOException e) {
-            logger.error("Error writing successful email to file", e);
+            // Обработка ошибки чтения файла
+            logger.error("Error reading emails file", e);
             // или бросить RuntimeException, чтобы прервать выполнение
-            throw new RuntimeException("Error writing successful email to file", e);
+            throw new RuntimeException("Error reading emails file", e);
         }
     }
 }

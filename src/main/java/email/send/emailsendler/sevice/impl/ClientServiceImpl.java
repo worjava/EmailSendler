@@ -67,14 +67,14 @@ public class ClientServiceImpl implements ClientService, CommandLineRunner {
     }
 
     public void customerRecord() {
-        if (clientRepository.count() == 0) {
+//        if (clientRepository.count() == 0) {
 
             List<String> emails = getEmails();
             saveClient(emails);
-        } else {
-            log.info("Данные уже присутввуют");
+//        } else {
+//            log.info("Данные уже присутввуют");
         }
-    }
+
     @Override
     public void run(String... args) {
         customerRecord();
