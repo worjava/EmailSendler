@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService, CommandLineRunner {
 
         long end = System.currentTimeMillis();
         long seconds = TimeUnit.MILLISECONDS.toSeconds(end - start);
-        log.info ("email клиентов записаны в бд. Время выполнения: " + seconds + " секунд");
+        log.info("email клиентов записаны в бд. Время выполнения: " + seconds + " секунд");
     }
 
     public List<String> getEmails() {
@@ -50,14 +50,13 @@ public class ClientServiceImpl implements ClientService, CommandLineRunner {
             String email;
 
 
-
             while ((email = reader.readLine()) != null) {
                 emails.add(email);
             }
 
             long end = System.currentTimeMillis();
             long seconds = TimeUnit.MILLISECONDS.toSeconds(end - start);
-            log.info ("Документ прочитан и email клиентов записаны в List. Время выполнения: " + seconds + " секунд");
+            log.info("Документ прочитан и email клиентов записаны в List. Время выполнения: " + seconds + " секунд");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,13 +66,14 @@ public class ClientServiceImpl implements ClientService, CommandLineRunner {
     }
 
     public void customerRecord() {
-//        if (clientRepository.count() == 0) {
+        if (clientRepository.count() == 0) {
 
             List<String> emails = getEmails();
             saveClient(emails);
-//        } else {
-//            log.info("Данные уже присутввуют");
+        } else {
+            log.info("Данные уже присутввуют");
         }
+    }
 
     @Override
     public void run(String... args) {
